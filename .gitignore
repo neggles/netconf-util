@@ -150,3 +150,6 @@ dmypy.json
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/python,vscode
+
+# ignore xmls in root folder
+/*.xml

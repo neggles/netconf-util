@@ -44,10 +44,10 @@ def main(args):
                 print("Saving raw response to %s_raw.xml" % str(args.outfile))
                 f.write(config._raw)
 
-            if args.verbose >= 3:
+            """ if args.verbose >= 3:
                 with open(str(args.outfile + '_debug.xml'), "w") as f:
                     print("Saving debug dump to %s_debug.xml" % str(args.outfile))
-                    f.write(str(vars(config)))
+                    f.write(str(vars(config))) """
             pass
         except:
             print("Something went wrong, sorry...")
