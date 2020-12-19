@@ -17,6 +17,10 @@ def main(args):
         print(args)
         pass
 
+    # Override port to 2022 for RCS
+    if args.rcs:
+        args.port = 2022
+
     nodeInstance = RbsNetconf.Node(host=str(args.hostname),
                                    username=str(args.username),
                                    port=int(args.port),
@@ -95,6 +99,12 @@ if __name__ == "__main__":
                         "--outfile",
                         default="config-out",
                         help="Path to output file for get-config")
+
+    parser.add_argument("-r",
+                        "--rcs",
+                        action="store_true",
+                        default=False,
+                        help="Convenient way to override port to 2022")
 
     # Optional verbosity counter (eg. -v, -vv, -vvv, etc.)
     parser.add_argument("-v",
