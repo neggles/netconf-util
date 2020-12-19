@@ -9,6 +9,25 @@ __license__ = "MIT"
 
 import argparse
 import RbsNetconf
+import xml.etree.ElementTree as xml
+
+
+def getConfig(nodeInstance):
+    try:
+        config = nodeInstance.get_config()
+        print("Config retrieved")
+        with open(str(args.outfile + '.xml'), "w") as f:
+            print("Saving config data to %s.xml" % str(args.outfile))
+            f.write(config.data_xml)
+
+        if args.raw:
+            with open(str(args.outfile + '_raw.xml'), "w") as f:
+                print("Saving raw response to %s_raw.xml" % str(args.outfile))
+                f.write(config._raw)
+        pass
+    except:
+        print("Something went wrong, sorry...")
+        pass
 
 
 def main(args):
@@ -33,25 +52,7 @@ def main(args):
 
     # do get-config action
     if args.action == 'get-config':
-        try:
-            config = nodeInstance.get_config()
-            print("Config retrieved")
-            with open(str(args.outfile + '.xml'), "w") as f:
-                print("Saving config data to %s.xml" % str(args.outfile))
-                f.write(config.data_xml)
-
-            with open(str(args.outfile + '_raw.xml'), "w") as f:
-                print("Saving raw response to %s_raw.xml" % str(args.outfile))
-                f.write(config._raw)
-
-            """ if args.verbose >= 3:
-                with open(str(args.outfile + '_debug.xml'), "w") as f:
-                    print("Saving debug dump to %s_debug.xml" % str(args.outfile))
-                    f.write(str(vars(config))) """
-            pass
-        except:
-            print("Something went wrong, sorry...")
-            pass
+        getConfig(nodeInstance)
 
 
 if __name__ == "__main__":
@@ -110,6 +111,13 @@ if __name__ == "__main__":
                         action="store_true",
                         default=False,
                         help="Convenient way to override port to 2022")
+
+    parser.add_argument("-oR",
+                        "--raw",
+                        action="store_true",
+                        dest="raw",
+                        default=False,
+                        help="save raw RPC reply as well as data-only chunk")
 
     # Optional verbosity counter (eg. -v, -vv, -vvv, etc.)
     parser.add_argument("-v",
