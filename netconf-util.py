@@ -35,14 +35,19 @@ def main(args):
     if args.action == 'get-config':
         try:
             config = nodeInstance.get_config()
-            print("Config retrieved, saving xml to %s" % str(args.outfile))
+            print("Config retrieved")
             with open(str(args.outfile + '.xml'), "w") as f:
+                print("Saving config data to %s.xml" % str(args.outfile))
                 f.write(config.data_xml)
+
             with open(str(args.outfile + '_raw.xml'), "w") as f:
+                print("Saving raw response to %s_raw.xml" % str(args.outfile))
                 f.write(config._raw)
-                if args.verbose > 1:
-                    with open(str(args.outfile + '_debug.xml'), "w") as f:
-                        f.write(vars(config))
+
+            if args.verbose >= 3:
+                with open(str(args.outfile + '_debug.xml'), "w") as f:
+                    print("Saving debug dump to %s_debug.xml" % str(args.outfile))
+                    f.write(str(vars(config)))
             pass
         except:
             print("Something went wrong, sorry...")
