@@ -1,6 +1,9 @@
 netconf-util
 ===========
 
+This is just a little python script thing to make handling Ericsson RBS/pRBS netconf XML get/set more convenient.  
+It supports using ssh-agent keys, which none of the assembled packages I've come across so far do, which is a problem for a pRBS in stand-alone mode (which requires use of SSH certificate auth...)
+
 Getting Started
 ---------------
 
@@ -11,6 +14,10 @@ Getting Started
 - Run setup.sh to create a venv and install the appropriate modules
 
     `bash ./setup.sh`
+
+- For pRBS nodes: Start ssh-agent if it's not running, and add your key/cert:
+
+    `eval "$(ssh-agent -s)" && ssh-add ~/path/to/id_file_and_cert`
 
 - Run the utility
 
